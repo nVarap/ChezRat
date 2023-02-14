@@ -12,6 +12,7 @@ public class CharacterController : MonoBehaviour
     public float acceleration = 5;
     public float friction = 1f;
     public float frictionMultiplier = 0.2f;
+    public CameraController camController;
     private GameObject player;
     private Rigidbody rb;
     private bool isMoving;
@@ -60,12 +61,20 @@ public class CharacterController : MonoBehaviour
             float magn = dire.magnitude;
             dire = dire.normalized;
             dire *= magn;
-            rb.AddForce(dire, ForceMode.Acceleration);
+            rb.AddForce(dire);
         }
         else
         {
             Debug.Log("slowning");
-            movement = Quaternion.Euler(0, 45, 0) * Vector3.zero;
+            if (camController.cameraPositions[camController.currentIndex].camTypes == CameraTypes.Isographic)
+            {
+                movement = Quaternion.Euler(0, 45, 0) * Vector3.zero;
+            }
+            else if (camController.cameraPositions[camController.currentIndex].camTypes == CameraTypes.Forward)
+            {
+                movement = Vector3.zero;
+
+            }
             Vector3 currentVel = rb.velocity;
             Vector3 velChange = movement - currentVel;
             velChange.x = Mathf.Clamp(velChange.x, -friction, friction);
@@ -80,6 +89,15 @@ public class CharacterController : MonoBehaviour
         float vAxis = Input.GetAxisRaw("Vertical");
 
         Vector3 direction = new Vector3(hAxis, 0, vAxis);
+        if (camController.cameraPositions[camController.currentIndex].camTypes == CameraTypes.Isographic)
+        {
+            return Quaternion.Euler(0, 45, 0) * direction;
+        }
+        else if (camController.cameraPositions[camController.currentIndex].camTypes == CameraTypes.Forward)
+        {
+            return direction;
+
+        }
         return Quaternion.Euler(0, 45, 0) * direction;
     }
 }
