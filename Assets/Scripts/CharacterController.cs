@@ -7,7 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class CharacterController : MonoBehaviour
 {
-    public bool rotate = true;
+    public float maxSpeed = 10f;
     public float speed = 5;
     public float acceleration = 5;
     public float friction = 1f;
@@ -15,6 +15,7 @@ public class CharacterController : MonoBehaviour
     private GameObject player;
     private Rigidbody rb;
     private bool isMoving;
+
     private Vector3 movement;
     // Start is called before the first frame update
     void Start()
@@ -26,7 +27,6 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         move();
     }
 
@@ -43,16 +43,24 @@ public class CharacterController : MonoBehaviour
 
         if (isMoving)
         {
-            movement = speed * new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-            movement = Quaternion.Euler(0, 45, 0) * movement;
+            Vector3 dir = Direction().normalized;
+            Vector3 spid = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            float accel = acceleration;
+            if (spid.magnitude > maxSpeed)
+            {
+                accel *= spid.magnitude / maxSpeed;
+            }
+            Vector3 dire = dir * maxSpeed - spid;
 
-            Vector3 currentVel = rb.velocity;
-            Vector3 velChange = movement - currentVel;
-            velChange.x = Mathf.Clamp(velChange.x, -acceleration, acceleration);
-            velChange.y = 0;
-            velChange.z = Mathf.Clamp(velChange.z, -acceleration, acceleration);
-            rb.AddForce(velChange, ForceMode.VelocityChange);
-
+            if (dire.magnitude < 0.5f)
+            {
+                accel *= dire.magnitude / 0.5f;
+            }
+            dire = dire.normalized * accel;
+            float magn = dire.magnitude;
+            dire = dire.normalized;
+            dire *= magn;
+            rb.AddForce(dire, ForceMode.Acceleration);
         }
         else
         {
@@ -65,5 +73,13 @@ public class CharacterController : MonoBehaviour
             velChange.z = Mathf.Clamp(velChange.z, -friction, friction);
             rb.velocity += (velChange * frictionMultiplier);
         }
+    }
+    private Vector3 Direction()
+    {
+        float hAxis = Input.GetAxisRaw("Horizontal");
+        float vAxis = Input.GetAxisRaw("Vertical");
+
+        Vector3 direction = new Vector3(hAxis, 0, vAxis);
+        return Quaternion.Euler(0, 45, 0) * direction;
     }
 }
