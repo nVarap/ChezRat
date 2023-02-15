@@ -1,6 +1,6 @@
 # Blender v3.2.2 OBJ File: 'stuff.blend'
 # www.blender.org
-mtllib Gourmet Pizza.mtl
+mtllib Gourmet_Pizza.mtl
 o Gourmet_Pizza_Cube.005
 v -2.635627 0.358742 0.682150
 v -2.415373 0.358742 0.773382
