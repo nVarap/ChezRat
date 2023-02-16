@@ -7,8 +7,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class CharacterController : MonoBehaviour
 {
+    public KeyCode chairKey = KeyCode.E;
+    public LayerMask chairLayer;
     public float maxSpeed = 10f;
-    public float speed = 5;
     public float acceleration = 5;
     public float friction = 1f;
     public float frictionMultiplier = 0.2f;
@@ -16,7 +17,7 @@ public class CharacterController : MonoBehaviour
     private GameObject player;
     private Rigidbody rb;
     private bool isMoving;
-
+    private bool chairSwitched = false;
     private Vector3 movement;
     // Start is called before the first frame update
     void Start()
@@ -29,6 +30,10 @@ public class CharacterController : MonoBehaviour
     void Update()
     {
         move();
+        if (Input.GetKeyUp(chairKey))
+        {
+            chairSwitched = false;
+        }
     }
 
     void move()
@@ -99,5 +104,24 @@ public class CharacterController : MonoBehaviour
 
         }
         return Quaternion.Euler(0, 45, 0) * direction;
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (Input.GetKey(chairKey) && chairSwitched == false)
+            if ((chairLayer.value & 1 << other.gameObject.layer) > 0 && other.gameObject.GetComponent<Chair>() != null)
+            {
+
+                if (other.gameObject.GetComponent<Chair>().chairState == ChairState.Push)
+                {
+                    chairSwitched = true;
+                    other.gameObject.GetComponent<Chair>().chairState = ChairState.Pull;
+                }
+                else if (other.gameObject.GetComponent<Chair>().chairState == ChairState.Pull)
+                {
+                    chairSwitched = true;
+
+                    other.gameObject.GetComponent<Chair>().chairState = ChairState.Push;
+                }
+            }
     }
 }

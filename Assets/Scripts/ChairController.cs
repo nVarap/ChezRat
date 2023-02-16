@@ -11,8 +11,7 @@ public class ChairController : MonoBehaviour
     public bool refreshGO;
     public bool savePositions;
     public bool resetPositions;
-    public float outShift = 0.05f;
-    public float pullSpeed;
+
 
 
     private Vector3[] positions = new Vector3[] { Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero };
@@ -60,38 +59,6 @@ public class ChairController : MonoBehaviour
         down.gameObject.SetActive(down.enabled);
         left.gameObject.SetActive(left.enabled);
         right.gameObject.SetActive(right.enabled);
-        int index = 0;
-        foreach (Chairs chair in new Chairs[] { top, down, left, right })
-        {
-            if (chair.pull)
-            {
-                switch (index)
-                {
-                    case 0:
-                        chair.gameObject.transform.position = Vector3.Lerp(chair.gameObject.transform.position, new Vector3(outShift, 0, 0) + positions[index], pullSpeed);
-                        break;
-                    case 2:
-                        chair.gameObject.transform.position = Vector3.Lerp(chair.gameObject.transform.position, new Vector3(0, 0, outShift) + positions[index], pullSpeed);
-
-                        break;
-                    case 1:
-                        chair.gameObject.transform.position = Vector3.Lerp(chair.gameObject.transform.position, new Vector3(-0, 0, 0) + positions[index], pullSpeed);
-
-                        break;
-                    case 3:
-                        chair.gameObject.transform.position = Vector3.Lerp(chair.gameObject.transform.position, new Vector3(0, 0, -outShift) + positions[index], pullSpeed);
-
-                        break;
-                    default:
-                        break;
-                }
-            }
-            else
-            {
-                chair.gameObject.transform.position = Vector3.Lerp(chair.gameObject.transform.position, positions[index], pullSpeed);
-            }
-            index += 1;
-        }
     }
 }
 [System.Serializable]
@@ -99,5 +66,4 @@ public struct Chairs
 {
     public GameObject gameObject;
     public bool enabled;
-    public bool pull;
 }
