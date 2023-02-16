@@ -70,7 +70,6 @@ public class CharacterController : MonoBehaviour
         }
         else
         {
-            Debug.Log("slowning");
             if (camController.cameraPositions[camController.currentIndex].camTypes == CameraTypes.Isographic)
             {
                 movement = Quaternion.Euler(0, 45, 0) * Vector3.zero;

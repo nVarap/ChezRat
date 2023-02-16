@@ -6,7 +6,6 @@ using Unity.AI;
 
 public class AIController : MonoBehaviour
 {
-
     public GameObject prefab;
     public KeyCode spawn = KeyCode.Q;
     public KeyCode randomizeGoals = KeyCode.R;
@@ -15,8 +14,10 @@ public class AIController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         // meshAgent = agent.GetComponent<NavMeshAgent>();
         // meshAgent.destination = goal.transform.position;
+        Physics.IgnoreLayerCollision(this.gameObject.layer, this.gameObject.layer);
 
         goals = GameObject.FindGameObjectsWithTag("Chair");
 

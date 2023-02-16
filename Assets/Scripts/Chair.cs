@@ -46,7 +46,6 @@ public class Chair : MonoBehaviour
 
                 break;
             case Direction.Down:
-                Debug.Log("a");
                 this.gameObject.transform.position = Vector3.Lerp(this.gameObject.transform.position, new Vector3(-outShift, 0, 0) + initialPos, pullSpeed);
 
                 break;

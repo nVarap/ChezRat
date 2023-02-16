@@ -7,6 +7,9 @@ public class Agent : MonoBehaviour
     public LayerMask chairLayer;
     [HideInInspector]
     public bool sitting = false;
+    public bool standing = false;
+
+
     private Vector3 prevPos;
     // Start is called before the first frame update
     void Start()
@@ -19,29 +22,34 @@ public class Agent : MonoBehaviour
     {
 
     }
+    void OnCollisionEnter(Collision other)
+    {
+        Debug.Log(other.collider.gameObject.layer);
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if ((chairLayer.value & 1 << other.gameObject.layer) > 0 && other.gameObject.GetComponent<Chair>() != null && sitting)
         {
-            Debug.Log(this.GetComponent<BoxCollider>().enabled);
-
-            this.GetComponent<BoxCollider>().enabled = false;
-            Transform setObj = other.gameObject.transform.Find("SeatPosition");
-            this.transform.position = setObj.transform.position;
+            Debug.Log("Sitting");
+            Transform seatObj = other.gameObject.transform.Find("SeatPosition");
+            this.transform.position = seatObj.transform.position;
+            Debug.Log(Vector3.Distance(seatObj.transform.position, this.transform.position));
+            this.transform.rotation = seatObj.transform.rotation;
             sitting = false;
             other.gameObject.GetComponent<Chair>().chairState = ChairState.Pull;
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if ((chairLayer.value & 1 << other.gameObject.layer) > 0 && other.gameObject.GetComponent<Chair>() != null && sitting)
+        if ((chairLayer.value & 1 << other.gameObject.layer) > 0 && other.gameObject.GetComponent<Chair>() != null && standing)
         {
             other.gameObject.GetComponent<Chair>().chairState = ChairState.Push;
+            standing = false;
         }
     }
     public void Sit()
     {
-        Debug.Log(this.GetComponent<BoxCollider>().enabled);
 
         if (sitting == false)
         {
@@ -52,7 +60,9 @@ public class Agent : MonoBehaviour
     }
     public void Stand()
     {
+
         this.transform.position = prevPos;
-        this.GetComponent<BoxCollider>().enabled = true;
+
+        standing = true;
     }
 }
