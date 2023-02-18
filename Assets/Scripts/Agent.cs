@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Agent : MonoBehaviour
 {
@@ -8,23 +9,19 @@ public class Agent : MonoBehaviour
     [HideInInspector]
     public bool sitting = false;
     public bool standing = false;
-
+    private Transform saveState;
 
     private Vector3 prevPos;
     // Start is called before the first frame update
     void Start()
     {
-
+        saveState = this.transform;
     }
 
     // Update is called once per frame
     void Update()
     {
 
-    }
-    void OnCollisionEnter(Collision other)
-    {
-        Debug.Log(other.collider.gameObject.layer);
     }
 
     private void OnTriggerStay(Collider other)
@@ -33,11 +30,13 @@ public class Agent : MonoBehaviour
         {
             Debug.Log("Sitting");
             Transform seatObj = other.gameObject.transform.Find("SeatPosition");
-            this.transform.position = seatObj.transform.position;
             Debug.Log(Vector3.Distance(seatObj.transform.position, this.transform.position));
+            saveState.position = this.transform.position;
+            saveState.rotation = this.transform.rotation;
+            this.transform.position = seatObj.transform.position;
             this.transform.rotation = seatObj.transform.rotation;
             sitting = false;
-            other.gameObject.GetComponent<Chair>().chairState = ChairState.Pull;
+            other.gameObject.GetComponent<Chair>().chairState = ChairState.Sit;
         }
     }
     private void OnTriggerExit(Collider other)
@@ -45,6 +44,10 @@ public class Agent : MonoBehaviour
         if ((chairLayer.value & 1 << other.gameObject.layer) > 0 && other.gameObject.GetComponent<Chair>() != null && standing)
         {
             other.gameObject.GetComponent<Chair>().chairState = ChairState.Push;
+            this.transform.position = saveState.position;
+            this.transform.rotation = saveState.rotation;
+
+
             standing = false;
         }
     }
@@ -55,6 +58,8 @@ public class Agent : MonoBehaviour
         {
             prevPos = this.transform.position;
             sitting = true;
+            this.GetComponent<NavMeshAgent>().enabled = false;
+            this.GetComponent<Rigidbody>().isKinematic = true;
 
         }
     }
@@ -62,6 +67,9 @@ public class Agent : MonoBehaviour
     {
 
         this.transform.position = prevPos;
+        this.GetComponent<NavMeshAgent>().enabled = true;
+        this.GetComponent<Rigidbody>().isKinematic = false;
+
 
         standing = true;
     }

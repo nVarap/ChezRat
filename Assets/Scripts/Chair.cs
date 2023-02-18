@@ -5,14 +5,13 @@ using UnityEngine;
 public class Chair : MonoBehaviour
 {
     public Direction direction;
-    [HideInInspector]
     public ChairState chairState;
 
     private Vector3 initialPos;
 
     public float outShift = 0.4f;
     public float pullSpeed = 0.00f;
-
+    public float sitDist = 0.05f;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,8 +29,24 @@ public class Chair : MonoBehaviour
             case ChairState.Push:
                 this.gameObject.transform.position = Vector3.Lerp(this.gameObject.transform.position, initialPos, pullSpeed);
                 break;
+            case ChairState.Sit:
+                sit();
+                break;
             default:
                 break;
+        }
+    }
+    void sit()
+    {
+        Debug.Log(Vector3.Distance(this.gameObject.transform.position, initialPos));
+        Debug.Log(outShift - sitDist);
+        if (Vector3.Distance(this.gameObject.transform.position, initialPos) < (outShift - sitDist))
+        {
+            pull();
+        }
+        else
+        {
+            chairState = ChairState.Push;
         }
     }
     void pull()
@@ -72,5 +87,5 @@ public enum Direction
 }
 public enum ChairState
 {
-    Push, Pull
+    Push, Pull, Sit
 }
