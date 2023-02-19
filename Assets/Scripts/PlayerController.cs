@@ -23,22 +23,25 @@ public class PlayerController : MonoBehaviour
     private Vector3 movement;
     public GameObject chef;
     public Animator anim;
-    private bool prevMoving;
     private bool sitting = false;
     private bool standing = true;
     private Vector3 prevPos;
     private Transform saveState;
+    private bool prevSat = false;
     // Start is called before the first frame update
     void Start()
     {
         player = this.gameObject;
         rb = this.GetComponent<Rigidbody>();
         saveState = this.transform;
+        chef.transform.position = new Vector3(0, 0, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
+        anim.SetFloat("Walk", rb.velocity.sqrMagnitude);
+
         move();
         if (Input.GetKeyUp(chairKey))
         {
@@ -49,9 +52,12 @@ public class PlayerController : MonoBehaviour
         {
             if (sitting)
             {
-                Stand();
                 sitting = false;
             }
+        }
+        if (sitting == false && chairSwitched == true)
+        {
+            anim.SetBool("Sat", true);
         }
 
     }
@@ -69,7 +75,6 @@ public class PlayerController : MonoBehaviour
 
         if (isMoving)
         {
-            anim.SetTrigger("Walk");
             Vector3 dir = Direction().normalized;
             Vector3 spid = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
             float accel = acceleration;
@@ -108,14 +113,6 @@ public class PlayerController : MonoBehaviour
             velChange.z = Mathf.Clamp(velChange.z, -friction, friction);
             rb.velocity += (velChange * frictionMultiplier);
         }
-        if (!isMoving && prevMoving)
-        {
-            anim.SetTrigger("Walk");
-            Debug.Log("aaahhhhh");
-
-            anim.SetTrigger("Stop");
-        }
-        prevMoving = isMoving;
     }
     private Vector3 Direction()
     {
@@ -136,7 +133,7 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if (Input.GetKey(chairKey) && chairSwitched == false)
+        if (Input.GetKeyDown(chairKey) && chairSwitched == false)
             if ((chairLayer.value & 1 << other.gameObject.layer) > 0 && other.gameObject.GetComponent<Chair>() != null)
             {
 
@@ -152,6 +149,8 @@ public class PlayerController : MonoBehaviour
                 else if (other.gameObject.GetComponent<Chair>().chairState == ChairState.Pull)
                 {
                     chairSwitched = true;
+                    Stand();
+
 
                     other.gameObject.GetComponent<Chair>().chairState = ChairState.Push;
                 }
@@ -165,11 +164,20 @@ public class PlayerController : MonoBehaviour
             prevPos = this.transform.position;
             sitting = true;
             this.GetComponent<Rigidbody>().isKinematic = true;
+            anim.SetBool("Sit", true);
 
         }
     }
     public void Stand()
     {
+        anim.SetBool("Sit", false);
+
+
+        StartCoroutine(leaveChair());
+    }
+    public IEnumerator leaveChair()
+    {
+        yield return new WaitForSeconds(0.2f);
         this.transform.position = prevPos;
         this.GetComponent<Rigidbody>().isKinematic = false;
         standing = true;

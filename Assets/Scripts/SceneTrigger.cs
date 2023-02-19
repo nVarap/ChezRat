@@ -24,7 +24,6 @@ public class SceneTrigger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(started);
         timeRunning = Time.time - timeStart;
     }
     private void OnTriggerEnter(Collider other)

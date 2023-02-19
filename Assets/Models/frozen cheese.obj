@@ -1,6 +1,6 @@
 # Blender v3.2.2 OBJ File: 'stuff.blend'
 # www.blender.org
-mtllib frozen cheese.mtl
+mtllib frozen_cheese.mtl
 o frozen_fancy_cheese_Cube
 v -9.418839 -0.823026 8.441938
 v -9.418839 -0.342150 8.922815
