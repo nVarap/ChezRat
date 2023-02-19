@@ -8,47 +8,45 @@ using UnityEngine.UI;
 public class TimerControl : MonoBehaviour
 {
     [SerializeField]
-    public int timeInSeconds = 360;
+    public float seconds = 60f;
+    public float minutes = 5f;
     public TextMeshProUGUI timer;
     public TextMeshProUGUI day;
-
-    float time;
+    
     int dayCount = 1;
+    
     
 
     // Start is called before the first frame update
     void Start()
     {
-        time = timeInSeconds;
-        timer.text = convertToTimer(timeInSeconds);
+        timer.text = convertToTimer();
         day.text = "Day " + dayCount.ToString();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        time -= Time.deltaTime;
-        timer.text = convertToTimer(time);
-        if (time <= 0) {
-            time = timeInSeconds;
+        seconds -= Time.deltaTime;
+        timer.text = convertToTimer();
+        if (minutes == 0 && seconds == 0)
+        {
             dayCount++;
             day.text = "Day " + dayCount.ToString();
-
         }
+        if (seconds <= 0) { minutes -= 1; seconds = 60; Debug.Log("minute passed"); }
     }
-
-
-    private string convertToTimer(float time) {
-        float mins = Mathf.Floor(time / 60);
-        float secs = Mathf.RoundToInt(time - (mins*60));
-        if (secs < 10)
+    private string convertToTimer() {
+        if (seconds < 10)
         {
-            return mins.ToString() + ":" + "0" + secs.ToString();
+            return minutes.ToString() + ":" + "0" + Mathf.FloorToInt(seconds).ToString();
         }
         else {
-            return mins.ToString() + ":" + secs.ToString();
+            return minutes.ToString() + ":" + Mathf.FloorToInt(seconds).ToString();
         }
         
 
     }
+
+    
 }
