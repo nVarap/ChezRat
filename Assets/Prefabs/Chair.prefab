@@ -169,7 +169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   direction: 0
   chairState: 0
-  outShift: 0.4
+  outShift: 0.5
   pullSpeed: 0.05
   sitDist: 0.05
 --- !u!1 &4978849729556887185 stripped

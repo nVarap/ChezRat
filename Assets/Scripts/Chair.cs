@@ -52,26 +52,27 @@ public class Chair : MonoBehaviour
 
     void pull()
     {
-        switch (direction)
-        {
-            case Direction.Top:
-                this.gameObject.transform.localPosition = Vector3.Lerp(this.gameObject.transform.localPosition, new Vector3(outShift, 0, 0) + initialPos, pullSpeed);
-                break;
-            case Direction.Left:
-                this.gameObject.transform.localPosition = Vector3.Lerp(this.gameObject.transform.localPosition, new Vector3(0, 0, outShift) + initialPos, pullSpeed);
+        this.gameObject.transform.localPosition = Vector3.Lerp(this.gameObject.transform.localPosition, new Vector3(outShift, 0, 0) + initialPos, pullSpeed);
+        // switch (direction)
+        // {
+        //     case Direction.Top:
+        //         this.gameObject.transform.localPosition = Vector3.Lerp(this.gameObject.transform.localPosition, new Vector3(outShift, 0, 0) + initialPos, pullSpeed);
+        //         break;
+        //     case Direction.Left:
+        //         this.gameObject.transform.localPosition = Vector3.Lerp(this.gameObject.transform.localPosition, new Vector3(0, 0, outShift) + initialPos, pullSpeed);
 
-                break;
-            case Direction.Down:
-                this.gameObject.transform.localPosition = Vector3.Lerp(this.gameObject.transform.localPosition, new Vector3(-outShift, 0, 0) + initialPos, pullSpeed);
+        //         break;
+        //     case Direction.Down:
+        //         this.gameObject.transform.localPosition = Vector3.Lerp(this.gameObject.transform.localPosition, new Vector3(-outShift, 0, 0) + initialPos, pullSpeed);
 
-                break;
-            case Direction.Right:
-                this.gameObject.transform.localPosition = Vector3.Lerp(this.gameObject.transform.localPosition, new Vector3(0, 0, -outShift) + initialPos, pullSpeed);
+        //         break;
+        //     case Direction.Right:
+        //         this.gameObject.transform.localPosition = Vector3.Lerp(this.gameObject.transform.localPosition, new Vector3(0, 0, -outShift) + initialPos, pullSpeed);
 
-                break;
-            default:
-                break;
-        }
+        //         break;
+        //     default:
+        //         break;
+        // }
     }
 
     // private void OnCollisionEnter(Collision other)

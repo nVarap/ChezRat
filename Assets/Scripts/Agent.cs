@@ -30,8 +30,7 @@ public class Agent : MonoBehaviour
         {
             Debug.Log("Sitting");
             Transform seatObj = other.gameObject.transform.Find("SeatPosition");
-            Debug.Log(Vector3.Distance(seatObj.transform.localPosition, this.transform.localPosition));
-            saveState.position = this.transform.localPosition;
+            saveState.position = this.transform.position;
             saveState.rotation = this.transform.rotation;
             this.transform.position = seatObj.transform.position;
             this.transform.rotation = seatObj.transform.rotation;
@@ -44,7 +43,7 @@ public class Agent : MonoBehaviour
         if ((chairLayer.value & 1 << other.gameObject.layer) > 0 && other.gameObject.GetComponent<Chair>() != null && standing)
         {
             other.gameObject.GetComponent<Chair>().chairState = ChairState.Push;
-            this.transform.localPosition = saveState.position;
+            this.transform.position = saveState.position;
             this.transform.rotation = saveState.rotation;
 
 
@@ -53,20 +52,18 @@ public class Agent : MonoBehaviour
     }
     public void Sit()
     {
-
         if (sitting == false)
         {
-            prevPos = this.transform.localPosition;
+            prevPos = this.transform.position;
             sitting = true;
             this.GetComponent<NavMeshAgent>().enabled = false;
             this.GetComponent<Rigidbody>().isKinematic = true;
-
         }
     }
     public void Stand()
     {
 
-        this.transform.localPosition = prevPos;
+        this.transform.position = prevPos;
         this.GetComponent<NavMeshAgent>().enabled = true;
         this.GetComponent<Rigidbody>().isKinematic = false;
 

@@ -19,7 +19,7 @@ public class ChairController : MonoBehaviour
     void Start()
     {
         savePositions = true;
-        refreshGO = true;
+        refreshGO = false;
     }
 
     // Update is called once per frame
