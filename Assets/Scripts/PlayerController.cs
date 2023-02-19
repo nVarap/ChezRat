@@ -69,10 +69,7 @@ public class PlayerController : MonoBehaviour
 
         if (isMoving)
         {
-            if (prevMoving == false)
-            {
-                anim.SetTrigger("Walk");
-            }
+            anim.SetTrigger("Walk");
             Vector3 dir = Direction().normalized;
             Vector3 spid = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
             float accel = acceleration;
