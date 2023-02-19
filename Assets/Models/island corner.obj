@@ -1,6 +1,6 @@
 # Blender v3.2.2 OBJ File: 'furniture.blend'
 # www.blender.org
-mtllib island corner.mtl
+mtllib island_corner.mtl
 o island_corner_Cube.011
 v 2.440841 0.018191 13.262410
 v 2.440841 1.284156 13.262410

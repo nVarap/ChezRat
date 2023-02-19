@@ -13,7 +13,6 @@ public class ChairController : MonoBehaviour
     public bool resetPositions;
 
 
-
     private Vector3[] positions = new Vector3[] { Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero };
 
     // Start is called before the first frame update

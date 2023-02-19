@@ -1,6 +1,6 @@
 # Blender v3.2.2 OBJ File: 'furniture.blend'
 # www.blender.org
-mtllib counter corner.mtl
+mtllib counter_corner.mtl
 o end_counter_Cube.013
 v -1.000000 1.118578 14.787662
 v -1.000000 1.118578 12.787662

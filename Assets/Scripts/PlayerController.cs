@@ -5,7 +5,7 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(Rigidbody))]
-public class CharacterController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     public KeyCode chairKey = KeyCode.E;
     public LayerMask chairLayer;
@@ -18,6 +18,8 @@ public class CharacterController : MonoBehaviour
     private Rigidbody rb;
     private bool isMoving;
     private bool chairSwitched = false;
+
+    public List<PizzaTypes> pizzasBeingCarried = new List<PizzaTypes>();
     private Vector3 movement;
     // Start is called before the first frame update
     void Start()

@@ -1,6 +1,6 @@
 # Blender v3.2.2 OBJ File: 'counter.blend'
 # www.blender.org
-mtllib end counter.mtl
+mtllib end_counter.mtl
 o end_counter_Cube.002
 v -1.000000 1.118578 4.000000
 v -1.000000 1.118578 2.000000

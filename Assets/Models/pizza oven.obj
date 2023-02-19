@@ -1,6 +1,6 @@
 # Blender v3.2.2 OBJ File: 'furniture.blend'
 # www.blender.org
-mtllib pizza oven.mtl
+mtllib pizza_oven.mtl
 o pizza_oven_Cube.001
 v -1.182918 0.002734 18.483143
 v -1.182918 2.368570 18.483143

@@ -15,7 +15,7 @@ public class Chair : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        initialPos = gameObject.transform.position;
+        initialPos = gameObject.transform.localPosition;
     }
 
     // Update is called once per frame
@@ -27,7 +27,7 @@ public class Chair : MonoBehaviour
                 pull();
                 break;
             case ChairState.Push:
-                this.gameObject.transform.position = Vector3.Lerp(this.gameObject.transform.position, initialPos, pullSpeed);
+                this.gameObject.transform.localPosition = Vector3.Lerp(this.gameObject.transform.localPosition, initialPos, pullSpeed);
                 break;
             case ChairState.Sit:
                 sit();
@@ -38,9 +38,9 @@ public class Chair : MonoBehaviour
     }
     void sit()
     {
-        Debug.Log(Vector3.Distance(this.gameObject.transform.position, initialPos));
+        Debug.Log(Vector3.Distance(this.gameObject.transform.localPosition, initialPos));
         Debug.Log(outShift - sitDist);
-        if (Vector3.Distance(this.gameObject.transform.position, initialPos) < (outShift - sitDist))
+        if (Vector3.Distance(this.gameObject.transform.localPosition, initialPos) < (outShift - sitDist))
         {
             pull();
         }
@@ -49,23 +49,24 @@ public class Chair : MonoBehaviour
             chairState = ChairState.Push;
         }
     }
+
     void pull()
     {
         switch (direction)
         {
             case Direction.Top:
-                this.gameObject.transform.position = Vector3.Lerp(this.gameObject.transform.position, new Vector3(outShift, 0, 0) + initialPos, pullSpeed);
+                this.gameObject.transform.localPosition = Vector3.Lerp(this.gameObject.transform.localPosition, new Vector3(outShift, 0, 0) + initialPos, pullSpeed);
                 break;
             case Direction.Left:
-                this.gameObject.transform.position = Vector3.Lerp(this.gameObject.transform.position, new Vector3(0, 0, outShift) + initialPos, pullSpeed);
+                this.gameObject.transform.localPosition = Vector3.Lerp(this.gameObject.transform.localPosition, new Vector3(0, 0, outShift) + initialPos, pullSpeed);
 
                 break;
             case Direction.Down:
-                this.gameObject.transform.position = Vector3.Lerp(this.gameObject.transform.position, new Vector3(-outShift, 0, 0) + initialPos, pullSpeed);
+                this.gameObject.transform.localPosition = Vector3.Lerp(this.gameObject.transform.localPosition, new Vector3(-outShift, 0, 0) + initialPos, pullSpeed);
 
                 break;
             case Direction.Right:
-                this.gameObject.transform.position = Vector3.Lerp(this.gameObject.transform.position, new Vector3(0, 0, -outShift) + initialPos, pullSpeed);
+                this.gameObject.transform.localPosition = Vector3.Lerp(this.gameObject.transform.localPosition, new Vector3(0, 0, -outShift) + initialPos, pullSpeed);
 
                 break;
             default:

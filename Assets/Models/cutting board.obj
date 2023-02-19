@@ -1,6 +1,6 @@
 # Blender v3.2.2 OBJ File: 'furniture.blend'
 # www.blender.org
-mtllib cutting board.mtl
+mtllib cutting_board.mtl
 o cutting_board_Cube.019
 v 2.888093 1.384096 14.739787
 v 2.888093 1.384096 13.609773

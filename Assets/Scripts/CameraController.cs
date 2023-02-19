@@ -26,30 +26,25 @@ public class CameraController : MonoBehaviour
                 currentIndex = 0;
             }
         }
-        if (cam.transform.position != cameraPositions[currentIndex].obj.transform.position)
-        {
-            cam.transform.position = Vector3.Lerp(cam.transform.position, cameraPositions[currentIndex].obj.transform.position, cameraPositions[currentIndex].lerpSpeed);
+        // if (cam.transform.position != cameraPositions[currentIndex].obj.transform.position)
+        // {
+        //     cam.transform.position = Vector3.Lerp(cam.transform.position, cameraPositions[currentIndex].obj.transform.position, cameraPositions[currentIndex].lerpSpeed);
 
-        }
-        if (cam.transform.rotation != cameraPositions[currentIndex].obj.transform.rotation)
-        {
-            cam.transform.rotation = Quaternion.Lerp(cam.transform.rotation, cameraPositions[currentIndex].obj.transform.rotation, cameraPositions[currentIndex].lerpSpeed);
+        // }
+        // if (cam.transform.rotation != cameraPositions[currentIndex].obj.transform.rotation)
+        // {
+        //     cam.transform.rotation = Quaternion.Lerp(cam.transform.rotation, cameraPositions[currentIndex].obj.transform.rotation, cameraPositions[currentIndex].lerpSpeed);
 
+        // }
+    }
+    void Switch()
+    {
+        currentIndex += 1;
+        if (currentIndex == cameraPositions.Count)
+        {
+            currentIndex = 0;
         }
     }
 }
 
-[System.Serializable]
-public struct CameraPositions
-{
-    public GameObject obj;
-    [Range(0, 1)]
-    public float lerpSpeed;
-    public CameraTypes camTypes;
 
-}
-public enum CameraTypes
-{
-    Isographic,
-    Forward,
-}

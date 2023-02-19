@@ -17,7 +17,7 @@ public class AIController : MonoBehaviour
     {
 
         // meshAgent = agent.GetComponent<NavMeshAgent>();
-        // meshAgent.destination = goal.transform.position;
+        // meshAgent.destination = goal.transform.localPosition;
         Physics.IgnoreLayerCollision(this.gameObject.layer, this.gameObject.layer);
 
         goals = GameObject.FindGameObjectsWithTag("Chair");
@@ -48,7 +48,7 @@ public class AIController : MonoBehaviour
         }
         if (Input.GetKeyDown(spawn))
         {
-            agents.Add(Instantiate(prefab, this.transform.position, this.transform.rotation));
+            agents.Add(Instantiate(prefab, this.transform.localPosition, this.transform.rotation));
             agents[agents.Count - 1].gameObject.transform.SetParent(this.transform);
             agentEnable.Add(true);
 

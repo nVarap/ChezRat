@@ -1,6 +1,6 @@
 # Blender v3.2.2 OBJ File: 'counter.blend'
 # www.blender.org
-mtllib counter door.mtl
+mtllib counter_door.mtl
 o counter_door_Cube.003
 v -1.000000 1.118578 -2.001693
 v -1.000000 1.118578 -2.398307

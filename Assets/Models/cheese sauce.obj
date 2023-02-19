@@ -1,6 +1,6 @@
 # Blender v3.2.2 OBJ File: 'furniture.blend'
 # www.blender.org
-mtllib cheese sauce.mtl
+mtllib cheese_sauce.mtl
 o cheese_Cylinder.004
 v 3.555406 1.803478 16.389883
 v 3.565609 1.803478 16.390888

@@ -1,6 +1,6 @@
 # Blender v3.2.2 OBJ File: 'furniture.blend'
 # www.blender.org
-mtllib knife block.mtl
+mtllib knife_block.mtl
 o knife_block_Cube.021
 v 2.977770 2.076421 15.918407
 v 3.110507 1.788311 15.835454
